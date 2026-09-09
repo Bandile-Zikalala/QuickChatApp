@@ -18,6 +18,8 @@ public class Login {
     String savedCellNumber;
     String firstName;
     String lastName;
+    private String last;
+    private String first;
     
     //methy 1
      boolean checkUserName(String userName){ //checking whether the username is or less than 5 and has an underscore
@@ -65,8 +67,7 @@ public class Login {
           }
           //manje sengibheka i password aka igamalokwendula
           if (!checkPasswordComplexity(password)){
-              return "Cell phone number is incorrectly formatted or does not contain an international code, please correct "
-                      + "the number and try again.";
+              return "Password is not correctly formatted, please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
           }
           //makulunge konke lemininingwane izodlala kwibhokisi lesikhumbuzo
       this.savedUsername= username;
@@ -78,11 +79,11 @@ public class Login {
       //Methy 5
       //Login Method
       public void 
-              setSavedCredentilas(String username, String password, String fisrtName, String lastName){
+              setSavedCredentilas(String username, String password, String fisrt, String last){
                   this.savedUsername= username;
                   this.savedPassword= password;
-                  this.firstName= firstName;
-                  this.lastName= lastName;
+                  this.firstName= fisrt;
+                  this.lastName= last;
               }
               
       boolean loginUser(String enteredUsername, String enteredPassword){
@@ -96,8 +97,11 @@ public class Login {
               return "Username or password is incorrect, please try again.";
           }
       }
+
+    void setSavedCredentials(String username, String password, String first, String last) {
+        this.savedUsername = username;
+        this.savedPassword = password;
+        this.firstName = first;
+        this.lastName = last;
+    }
       }
-     
-
-
-      
