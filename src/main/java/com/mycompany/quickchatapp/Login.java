@@ -18,8 +18,8 @@ public class Login {
     String savedCellNumber;
     String firstName;
     String lastName;
-    private String last;
-    private String first;
+    String last;
+    String first;
     
     //methy 1
      boolean checkUserName(String userName){ //checking whether the username is or less than 5 and has an underscore
