@@ -5,7 +5,7 @@ package com.mycompany.quickchatapp;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
+ 
 /**
  *
  * @author makhu
@@ -77,13 +77,21 @@ public class Login {
 }
       //Methy 5
       //Login Method
+      public void 
+              setSavedCredentilas(String username, String password, String fisrtName, String lastName){
+                  this.savedUsername= username;
+                  this.savedPassword= password;
+                  this.firstName= firstName;
+                  this.lastName= lastName;
+              }
+              
       boolean loginUser(String enteredUsername, String enteredPassword){
           //to see if what they entered matches with what I saved
           return enteredUsername.equals(this.savedUsername) && enteredPassword.equals(this.savedPassword);
       }
       String returnLoginStatus (String enteredUsername, String enteredPassword){
           if(loginUser(enteredUsername, enteredPassword)){
-              return "Welcome" + firstName + " " + lastName + "it is great to see you again.";
+              return "Welcome" + firstName + "  "  + lastName + ",it is great to see you again.";
           }else{
               return "Username or password is incorrect, please try again.";
           }
