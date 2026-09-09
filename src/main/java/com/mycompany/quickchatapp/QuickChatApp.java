@@ -75,6 +75,6 @@ public class QuickChatApp {
         // sesisebenzisa leya Methy esiyikhande ngale
         System.out.println(user.returnLoginStatus(loginUname, loginPword));
         
-        //ayy khohlwani, senginyuka nayo lento.
+        //ayy khohlwani, nginyukile nayo lento!
     }
 }
