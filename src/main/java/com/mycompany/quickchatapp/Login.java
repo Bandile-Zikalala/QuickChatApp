@@ -5,11 +5,12 @@ package com.mycompany.quickchatapp;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+
 /**
  *
  * @author makhu
  */
-//login validation for QUICKCHAT
+//login validation for QUICKCHATAPP
 public class Login {
     //data I'm going to store
     String savedUsername;
