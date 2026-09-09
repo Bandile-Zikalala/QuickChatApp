@@ -9,6 +9,7 @@ package com.mycompany.quickchatapp;
  *
  * @author makhu
  */
+//login validation for QUICKCHAT
 public class Login {
     //data I'm going to store
     String savedUsername;
@@ -88,5 +89,6 @@ public class Login {
       }
       }
      
+
 
       
