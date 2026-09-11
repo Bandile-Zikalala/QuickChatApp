@@ -9,7 +9,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testCheckUserNameCorrectlyFormatted() {
+    public void testCheckUserNameValid() {
         System.out.println("checkUserName - correctly formatted");
         String userName = "kyl_1";
         Login instance = new Login();
@@ -19,7 +19,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testCheckUserNameIncorrectlyFormatted() {
+    public void testCheckUserNameInvalid() {
         System.out.println("checkUserName - incorrectly formatted");
         String userName = "kyle!!!!!!!";
         Login instance = new Login();
