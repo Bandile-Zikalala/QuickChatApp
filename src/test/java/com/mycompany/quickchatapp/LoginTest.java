@@ -87,4 +87,66 @@ public class LoginTest {
         boolean result = instance.loginUser("kyl_1", "wrongPass");
         assertEquals(expResult, result);
     }
+
+    // ============ 6 NEW TESTS ADDED IN YOUR SAME OLD FORMAT ============
+
+    @Test
+    public void testUsernameCorrectlyFormattedTrue() {
+        System.out.println("checkUserName - assertTrue - kyl_1");
+        String userName = "kyl_1";
+        Login instance = new Login();
+        boolean expResult = true;
+        boolean result = instance.checkUserName(userName);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testUsernameIncorrectlyFormattedFalse() {
+        System.out.println("checkUserName - assertFalse - kyle!!!!!!!");
+        String userName = "kyle!!!!!!!";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.checkUserName(userName);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testPasswordMeetsComplexityTrue() {
+        System.out.println("checkPasswordComplexity - assertTrue - Ch&&sec@ke99!");
+        String password = "Ch&&sec@ke99!";
+        Login instance = new Login();
+        boolean expResult = true;
+        boolean result = instance.checkPasswordComplexity(password);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testPasswordDoesNotMeetComplexityFalse() {
+        System.out.println("checkPasswordComplexity - assertFalse - password");
+        String password = "password";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.checkPasswordComplexity(password);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testCellPhoneCorrectlyFormattedTrue() {
+        System.out.println("checkCellPhoneNumber - assertTrue - +27838968976");
+        String cell = "+27838968976";
+        Login instance = new Login();
+        boolean expResult = true;
+        boolean result = instance.checkCellPhoneNumber(cell);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testCellPhoneIncorrectlyFormattedFalse() {
+        System.out.println("checkCellPhoneNumber - assertFalse - 08966553");
+        String cell = "08966553";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.checkCellPhoneNumber(cell);
+        assertEquals(expResult, result);
+    }
 }
