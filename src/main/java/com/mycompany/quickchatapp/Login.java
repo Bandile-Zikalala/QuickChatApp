@@ -23,9 +23,9 @@ public class Login {
     
     //methy 1
      boolean checkUserName(String userName){ //checking whether the username is or less than 5 and has an underscore
-         
          return userName.contains("_")&& userName.length() <=5;
      }
+     
      //checking if all the required thingies for the password are there oh the characters whatsoever.
      //Methy 2
       boolean checkPasswordComplexity(String password){
@@ -49,6 +49,7 @@ public class Login {
          }
          return hasLength && hasCapital && hasNumber && hasSpecial;//if it has all the required thingies it will return this 
      }
+     
       //Methy 3
       //Here I'll be checking if the number starts with +27
       //& has 10 characters + 2 so 12.
@@ -57,6 +58,7 @@ public class Login {
           //Kazi ubani owafika nalesiZulu esibhedayo la egoli,kodwa ngisola amapedi.
           return cellNumber.startsWith("+27")&& cellNumber.length()==12;
       }
+      
       //ayke sezizongikhalela ngempelake manje, kodwa ngoba ngumzulu mina ayy bafana ngingenhla kakhulu!!
       // sesika IEC sya register manje
       String registerUser(String username, String password, String cellNumber){
@@ -75,21 +77,21 @@ public class Login {
       this.savedCellNumber= cellNumber;
       
       return " User has been registered successfully.";
-}
-      //Methy 5
-      //Login Method
-      public void 
-              setSavedCredentilas(String username, String password, String fisrt, String last){
-                  this.savedUsername= username;
-                  this.savedPassword= password;
-                  this.firstName= fisrt;
-                  this.lastName= last;
-              }
+      }
+      
+      //Methy 5 - Login Method - I fixed the spelling here only
+      void setSavedCredentials(String username, String password, String first, String last) {
+          this.savedUsername = username;
+          this.savedPassword = password;
+          this.firstName = first;
+          this.lastName = last;
+      }
               
       boolean loginUser(String enteredUsername, String enteredPassword){
           //to see if what they entered matches with what I saved
           return enteredUsername.equals(this.savedUsername) && enteredPassword.equals(this.savedPassword);
       }
+      
       String returnLoginStatus (String enteredUsername, String enteredPassword){
           if(loginUser(enteredUsername, enteredPassword)){
               return "Welcome " + firstName + "  "  + lastName + ",it is great to see you again.";
@@ -97,11 +99,4 @@ public class Login {
               return "Username or password is incorrect, please try again.";
           }
       }
-
-    void setSavedCredentials(String username, String password, String first, String last) {
-        this.savedUsername = username;
-        this.savedPassword = password;
-        this.firstName = first;
-        this.lastName = last;
-    }
-      }
+}
