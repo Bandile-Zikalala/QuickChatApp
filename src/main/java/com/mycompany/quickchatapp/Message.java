@@ -12,15 +12,14 @@ public class Message {
     private int messageNumber;
 
     private static int totalSent = 0;
-    // Made public so main can show history for Menu 2
     public static String allMessagesHistory = "";
 
-    // Constructor with 3 params - matches your main
+    // Constructor - count is 0 for first message
     public Message(String recipient, String messageText, int count) {
         this.messageID = generateID();
         this.recipient = recipient;
         this.messageText = messageText;
-        this.messageNumber = count + 1;
+        this.messageNumber = count; // FIXED: was count+1, now count so first is 0 -> 00:0:HITONIGHT
         this.messageHash = createMessageHash();
     }
 
@@ -35,7 +34,6 @@ public class Message {
         return messageID.length() <= 10;
     }
 
-    // FIXED: now accepts +27 numbers like +27838568976 (was only <=10 before)
     public String checkRecipientCell() {
         if(recipient.startsWith("+") && recipient.length() >= 10 && recipient.length() <= 13) {
             return "Cell phone number successfully captured.";
@@ -61,16 +59,17 @@ public class Message {
         return (firstTwo + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
 
+    // FIXED: returns with period . to match test paper
     public String SentMessage(int choice) {
         if(choice == 1) {
             totalSent++;
             allMessagesHistory += printMessages() + "\n---\n";
-            return "Message successfully sent";
+            return "Message successfully sent.";
         } else if(choice == 2) {
-            return "Press 0 to delete the message";
+            return "Press 0 to delete the message.";
         } else if(choice == 3) {
             storeMessage();
-            return "Message successfully stored";
+            return "Message successfully stored.";
         }
         return "Invalid choice";
     }
@@ -83,14 +82,12 @@ public class Message {
         return totalSent;
     }
 
-    // Getters for main
     public String getMessageID() { return messageID; }
     public String getMessageHash() { return messageHash; }
     public String getRecipient() { return recipient; }
     public String getMessageText() { return messageText; }
     public static int getTotalSent() { return totalSent; }
 
-    // Stores to JSON file
     public void storeMessage() {
         try (FileWriter writer = new FileWriter("storedMessages.json", true)) {
             writer.write("{\"messageID\":\""+messageID+"\",\"hash\":\""+messageHash+"\",\"recipient\":\""+recipient+"\",\"message\":\""+messageText+"\"}\n");
