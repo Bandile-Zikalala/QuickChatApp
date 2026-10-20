@@ -69,84 +69,59 @@ public class QuickChatApp {
         int totalToEnter = Integer.parseInt(input.nextLine());
         int messagesEntered = 0;
 
-        while (true) {
-            System.out.println("\n--- MENU ---");
-            System.out.println("1) Send Messages");
-            System.out.println("2) Show recently sent messages");
-            System.out.println("3) Quit");
-            System.out.print("Choose option: ");
-            String choice = input.nextLine();
+      while (true) {
+    System.out.println("\n--- MENU ---");
+    System.out.println("1) Send Messages");
+    System.out.println("2) Show recently sent messages");
+    System.out.println("3) Stored Messages Report (Part 3)");
+    System.out.println("4) Quit");
+    System.out.print("Choose option: ");
+    String choice = input.nextLine();
 
-            if (choice.equals("1")) {
-                if (messagesEntered >= totalToEnter) {
-                    System.out.println("You have finished sending all " + totalToEnter + " messages.");
-                    continue;
-                }
-
-                System.out.print("Enter recipient cell (e.g. +27838568976): ");
-                String recipient = input.nextLine();
-                System.out.print("Enter your message (max 250 chars): ");
-                String msgText = input.nextLine();
-
-                Message msg = new Message(recipient, msgText, messagesEntered);
-
-                if (!msg.checkMessageID()) {
-                    System.out.println("Message ID is too long");
-                    continue;
-                }
-
-                String recipientCheck = msg.checkRecipientCell();
-                System.out.println(recipientCheck);
-                if (!recipientCheck.contains("successfully")) {
-                    continue;
-                }
-
-                String lengthCheck = msg.checkMessageLength();
-                System.out.println(lengthCheck);
-                if (lengthCheck.contains("exceeds")) {
-                    continue;
-                }
-
-                System.out.println("\nChoose:");
-                System.out.println("1) Send Message");
-                System.out.println("2) Disregard Message");
-                System.out.println("3) Store Message to send later");
-                System.out.print("Enter choice: ");
-                int sendOption = Integer.parseInt(input.nextLine());
-
-                String sendResult = msg.SentMessage(sendOption);
-                System.out.println(sendResult);
-
-                if (sendOption == 1) {
-                    System.out.println("\n--- Message Details ---");
-                    System.out.println("Message ID: " + msg.getMessageID());
-                    System.out.println("Message Hash: " + msg.getMessageHash());
-                    System.out.println("Recipient: " + msg.getRecipient());
-                    System.out.println("Message: " + msg.getMessageText());
-                    messagesEntered++;
-                } else if (sendOption == 2) {
-                    System.out.print("Press 0 to delete. Enter 0: ");
-                    String del = input.nextLine();
-                    if (del.equals("0")) {
-                        System.out.println("Message deleted");
-                    }
-                    messagesEntered++;
-                } else if (sendOption == 3) {
-                    System.out.println("Stored for later in storedMessages.json");
-                    messagesEntered++;
-                }
-
-            } else if (choice.equals("2")) {
-                // PART 2 REQUIREMENT - Must say Coming Soon
-                System.out.println("Coming Soon.");
-            } else if (choice.equals("3")) {
-                System.out.println("Total messages sent: " + Message.getTotalSent());
-                System.out.println("Quitting QuickChat. Goodbye!");
-                break;
-            } else {
-                System.out.println("Invalid option");
-            }
+    if (choice.equals("1")) {
+        // ... keep your existing send logic ...
+    } else if (choice.equals("2")) {
+        System.out.println(Message.displayReport());
+    } else if (choice.equals("3")) {
+        System.out.println("\n--- STORED MESSAGES MENU ---");
+        System.out.println("a) Display sender and recipient of all sent messages");
+        System.out.println("b) Display longest message");
+        System.out.println("c) Search by Message ID");
+        System.out.println("d) Search by Recipient");
+        System.out.println("e) Delete by Hash");
+        System.out.println("f) Display full report");
+        System.out.print("Choose: ");
+        String sub = input.nextLine();
+        
+        if(sub.equalsIgnoreCase("a")) System.out.println(Message.displaySendersAndRecipients());
+        
+        else if(sub.equalsIgnoreCase("b")) System.out.println("Longest: " + Message.displayLongestMessage());
+        
+        else if(sub.equalsIgnoreCase("c")) {
+            
+            System.out.print("Enter Message ID: "); String id = input.nextLine();
+            
+            System.out.println(Message.searchByMessageID(id));
         }
-        input.close();
+        else if(sub.equalsIgnoreCase("d")) {
+            System.out.print("Enter Recipient: "); String rec = input.nextLine();
+            System.out.println(Message.searchByRecipient(rec));
+        }
+        else if(sub.equalsIgnoreCase("e")) {
+            System.out.print("Enter Hash: "); String hash = input.nextLine();
+            System.out.println(Message.deleteByHash(hash));
+        }
+        else if(sub.equalsIgnoreCase("f")) System.out.println(Message.displayReport());
+        
+    } else if (choice.equals("4")) {
+        System.out.println("Total messages sent: " + Message.getTotalSent());
+        System.out.println("Quitting QuickChat. Goodbye!");
+        
+        break;
+        
+    } else {
+        System.out.println("Invalid option");
+    }
+}
     }
 }
