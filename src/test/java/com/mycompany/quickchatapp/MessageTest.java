@@ -1,96 +1,84 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
-
 package com.mycompany.quickchatapp;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MessageTest {
 
-    String recipient1 = "+27718693002";
-    String message1 = "Hi Mike, can you join us for dinner tonight?";
-    
-    String recipient2 = "08575975889";
-    String message2 = "Hi Keegan, did you receive the payment?";
+    Message message1;
+    Message message2;
+    Message message3;
+    Message message4;
+    Message message5;
 
-    @Test
-    public void testMessageLengthSuccess() {
-        Message msg = new Message(recipient1, message1, 0);
-        String result = msg.checkMessageLength();
-        assertEquals("Message ready to send.", result);
+    @BeforeEach
+    public void setUp() {
+        // Clear all static arrays before each test - VERY IMPORTANT
+        Message.clearArrays();
+
+        // Test Data EXACTLY as per Part 3 Brief PDF Page 3-4
+        message1 = new Message("M001", "+27834557896", "Did you get the cake?", "00:0:DIDCAKE", 0);
+        message2 = new Message("M002", "+27838884567", "Where are you? You are late! I have asked you to be on time.", "11:1:WHERE TIME.", 1);
+        message3 = new Message("M003", "+27834484567", "Yohoooo, I am at your gate.", "22:2:YOHOOOO GATE.", 2);
+        message4 = new Message("0838884567", "+27838884567", "It is dinner time !", "33:3:IT!", 3);
+        message5 = new Message("M005", "+27838884567", "Ok, I am leaving without you.", "44:4:OKYOU.", 4);
+
+        // Populate arrays as per flags: Sent, Stored, Disregard, Sent, Stored
+        message1.SentMessage(1);
+        message2.SentMessage(3);
+        message3.SentMessage(2);
+        message4.SentMessage(1);
+        message5.SentMessage(3);
     }
 
     @Test
-    public void testMessageLengthFailure() {
-        String longMsg = "a".repeat(260);
-        Message msg = new Message(recipient1, longMsg, 0);
-        String result = msg.checkMessageLength();
-        assertTrue(result.contains("exceeds 250 characters"));
+    public void testSentMessagesArrayCorrectlyPopulated() {
+        // Returns "Did you get the cake?", "It is dinner time !"
+        assertEquals(2, Message.sentMessages.size());
+        assertTrue(Message.sentMessages.get(0).getMessageText().contains("Did you get the cake?"));
+        assertTrue(Message.sentMessages.get(1).getMessageText().contains("It is dinner time"));
     }
 
     @Test
-    public void testRecipientNumberSuccess() {
-        Message msg = new Message(recipient1, message1, 0);
-        String result = msg.checkRecipientCell();
-        assertEquals("Cell phone number successfully captured.", result);
+    public void testDisplayLongestMessage() {
+        // Returns "Where are you? You are late! I have asked you to be on time."
+        String longest = Message.displayLongestMessage();
+        assertEquals("Where are you? You are late! I have asked you to be on time.", longest);
     }
 
     @Test
-    public void testRecipientNumberFailure() {
-        Message msg = new Message(recipient2, message2, 1);
-        String result = msg.checkRecipientCell();
-        assertEquals("Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.", result);
+    public void testSearchForMessageID() {
+        // Test data message 4, "0838884567", Returns "It is dinner time !"
+        String result = Message.searchByMessageID("0838884567");
+        assertTrue(result.contains("It is dinner time"));
     }
 
     @Test
-    public void testMessageHash() {
-        Message msg = new Message(recipient1, message1, 0);
-        String hash = msg.getMessageHash();
-        // Should contain :0: and HI and TONIGHT
-        assertTrue(hash.contains(":0:"));
-        assertTrue(hash.toUpperCase().contains("HI"));
-        assertTrue(hash.toUpperCase().contains("TONIGHT"));
+    public void testSearchForRecipient() {
+        // Test Data +27838884567, Returns 2 messages
+        String result = Message.searchByRecipient("+27838884567");
+        assertTrue(result.contains("Where are you? You are late! I have asked you to be on time."));
+        assertTrue(result.contains("Ok, I am leaving without you."));
     }
 
     @Test
-    public void testMessageIDCreated() {
-        Message msg = new Message(recipient1, message1, 0);
-        String id = msg.getMessageID();
-        assertNotNull(id);
-        assertTrue(id.length() <= 10);
-        assertTrue(msg.checkMessageID());
+    public void testDeleteByHash() {
+        // Test Data Test Message 2, Returns "Message successfully deleted."
+        String result = Message.deleteByHash("11:1:WHERE TIME.");
+        assertEquals("Message successfully deleted.", result);
+        assertEquals(1, Message.storedMessages.size());
     }
 
     @Test
-    public void testMessageSent_Sent() {
-        Message msg = new Message(recipient1, message1, 0);
-        String result = msg.SentMessage(1);
-        assertEquals("Message successfully sent.", result);
-    }
-
-    @Test
-    public void testMessageSent_Disregard() {
-        Message msg = new Message(recipient2, message2, 1);
-        String result = msg.SentMessage(2);
-        assertEquals("Press 0 to delete the message.", result);
-    }
-
-    @Test
-    public void testMessageSent_Store() {
-        Message msg = new Message(recipient1, message1, 0);
-        String result = msg.SentMessage(3);
-        assertEquals("Message successfully stored.", result);
-    }
-
-    @Test
-    public void testReturnTotalMessages() {
-        int before = Message.getTotalSent();
-        Message msg = new Message(recipient1, message1, 0);
-        msg.SentMessage(1);
-        int after = Message.getTotalSent();
-        assertEquals(before + 1, after);
+    public void testDisplayReport() {
+        String report = Message.displayReport();
+        System.out.println(report);
+        assertTrue(report.contains("Did you get the cake?"));
+        assertTrue(report.contains("+27834557896"));
+        assertTrue(report.contains("00:0:DIDCAKE"));
+        assertTrue(report.contains("It is dinner time"));
     }
 }
+
+
