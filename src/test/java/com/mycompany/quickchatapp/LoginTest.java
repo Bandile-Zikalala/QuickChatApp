@@ -4,87 +4,69 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
-    
-    public LoginTest() {
+
+    @Test
+    public void testCheckUserNameCorrectlyFormatted() {
+        Login login = new Login();
+        assertTrue(login.checkUserName("kyl_1"));
     }
 
     @Test
-    public void testCheckUserNameValid() {
-        System.out.println("checkUserName - correctly formatted");
-        String userName = "kyl_1";
-        Login instance = new Login();
-        boolean expResult = true;
-        boolean result = instance.checkUserName(userName);
-        assertEquals(expResult, result);
+    public void testCheckUserNameIncorrectlyFormatted() {
+        Login login = new Login();
+        assertFalse(login.checkUserName("kyle!!!!"));
     }
 
     @Test
-    public void testCheckUserNameInvalid() {
-        System.out.println("checkUserName - incorrectly formatted");
-        String userName = "kyle!!!!!!!";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkUserName(userName);
-        assertEquals(expResult, result);
+    public void testCheckPasswordComplexityCorrect() {
+        Login login = new Login();
+        assertTrue(login.checkPasswordComplexity("Ch&&sec@ke99!"));
     }
 
     @Test
-    public void testCheckPasswordComplexityValid() {
-        System.out.println("checkPasswordComplexity - valid Ch&&sec@ke99!");
-        String password = "Ch&&sec@ke99!";
-        Login instance = new Login();
-        boolean expResult = true;
-        boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(expResult, result);
+    public void testCheckPasswordComplexityIncorrect() {
+        Login login = new Login();
+        assertFalse(login.checkPasswordComplexity("password"));
     }
 
     @Test
-    public void testCheckPasswordComplexityInvalid() {
-        System.out.println("checkPasswordComplexity - invalid password");
-        String password = "password";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(expResult, result);
+    public void testCheckCellPhoneNumberCorrect() {
+        Login login = new Login();
+        assertTrue(login.checkCellPhoneNumber("+27834557896"));
     }
 
     @Test
-    public void testCellPhoneCorrectlyFormatted() {
-        System.out.println("checkCellPhoneNumber - +27838968976");
-        String cell = "+27838968976";
-        Login instance = new Login();
-        boolean expResult = true;
-        boolean result = instance.checkCellPhoneNumber(cell);
-        assertEquals(expResult, result);
+    public void testCheckCellPhoneNumberIncorrect() {
+        Login login = new Login();
+        assertFalse(login.checkCellPhoneNumber("08966553"));
     }
 
     @Test
-    public void testCellPhoneIncorrectlyFormatted() {
-        System.out.println("checkCellPhoneNumber - 08966553");
-        String cell = "08966553";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkCellPhoneNumber(cell);
-        assertEquals(expResult, result);
+    public void testRegisterUserSuccess() {
+        Login login = new Login();
+        String result = login.registerUser("kyl_1", "Ch&&sec@ke99!", "+27834557896");
+        assertEquals("User has been registered successfully.", result);
     }
 
     @Test
-    public void testLoginSuccessful() {
-        System.out.println("loginUser - successful");
-        Login instance = new Login();
-        instance.setSavedCredentials("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
-        boolean expResult = true;
-        boolean result = instance.loginUser("kyl_1", "Ch&&sec@ke99!");
-        assertEquals(expResult, result);
+    public void testLoginUserSuccess() {
+        Login login = new Login();
+        login.firstName = "Kyle";
+        login.lastName = "Smith";
+        login.registerUser("kyl_1", "Ch&&sec@ke99!", "+27834557896");
+        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
+        assertEquals("Welcome Kyle, Smith, it is great to see you again.",
+                login.returnLoginStatus("kyl_1", "Ch&&sec@ke99!"));
     }
 
     @Test
-    public void testLoginFailed() {
-        System.out.println("loginUser - failed");
-        Login instance = new Login();
-        instance.setSavedCredentials("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
-        boolean expResult = false;
-        boolean result = instance.loginUser("kyl_1", "wrongPass");
-        assertEquals(expResult, result);
+    public void testLoginUserFailed() {
+        Login login = new Login();
+        login.firstName = "Kyle";
+        login.lastName = "Smith";
+        login.registerUser("kyl_1", "Ch&&sec@ke99!", "+27834557896");
+        assertFalse(login.loginUser("kyl_1", "wrongpass"));
+        assertEquals("Username or password is incorrect, please try again.",
+                login.returnLoginStatus("kyl_1", "wrongpass"));
     }
 }
