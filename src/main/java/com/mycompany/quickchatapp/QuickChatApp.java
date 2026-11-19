@@ -7,6 +7,7 @@ public class QuickChatApp {
         Login user = new Login();
         Message.loadStoredMessages();
 
+        //syakwamukela kwi app yethu esebenzayo
         System.out.println("WELCOME TO QUICKCHAT");
         System.out.print("Enter First Name: ");
         user.firstName = input.nextLine();
@@ -14,7 +15,7 @@ public class QuickChatApp {
         user.lastName = input.nextLine();
 
         String username, password, cellNumber;
-
+      //syabhalisa, faka imininingwane bese thina sizoyigcina
         System.out.println("\n--- Registration ---");
         do {
             System.out.print("Enter username (must contain _ and <=5 chars e.g. kyl_1): ");
@@ -22,6 +23,7 @@ public class QuickChatApp {
             if (!user.checkUserName(username)) {
                 System.out.println("Username is not correctly formatted...");
             }
+            //njengoba kusenjalo nje,uzongena 
         } while (!user.checkUserName(username));
         System.out.println("Username successfully captured.");
 
@@ -44,13 +46,13 @@ public class QuickChatApp {
         System.out.println("Cell phone number successfully captured.");
 
         System.out.println("\n" + user.registerUser(username, password, cellNumber));
-
+        //makuhambe kahle uzo logina
         System.out.println("\n--- Login ---");
         System.out.print("Enter username to login: ");
         String loginUname = input.nextLine().trim();
         System.out.print("Enter password to login: ");
         String loginPword = input.nextLine().trim();
-
+       //imininingwane yokungena lenake ebesiybekile
         boolean loggedIn = user.loginUser(loginUname, loginPword);
         System.out.println(user.returnLoginStatus(loginUname, loginPword));
         if (!loggedIn) {
@@ -58,7 +60,7 @@ public class QuickChatApp {
             input.close();
             return;
         }
-
+     //imininingwane mayifanile, nansi ivume yokungena 
         System.out.println("\nWelcome to QuickChat.");
         int totalToEnter = 0;
         while (totalToEnter <= 0) {
@@ -154,12 +156,13 @@ public class QuickChatApp {
                     System.out.print("Enter Recipient (e.g. +27838884567): "); String rec = input.nextLine().trim();
                     System.out.println(Message.searchByRecipient(rec));
                 }
+                //nanti iphutha ngililungisile 
                 else if (sub.equals("e")) {
                     System.out.print("Enter Hash: "); String hash = input.nextLine().trim();
                     System.out.println(Message.deleteByHash(hash));
                 }
                 else if (sub.equals("f")) System.out.println(Message.displayReport());
-
+          //inani lemilayezo ethunyelwe
             } else if (choice.equals("4")) {
                 System.out.println("Total messages sent: " + Message.getTotalSent());
                 System.out.println("Quitting QuickChat. Goodbye!");
@@ -171,3 +174,4 @@ public class QuickChatApp {
         input.close();
     }
 }
+// syabonga, konke kuhambe ngohlelo.
