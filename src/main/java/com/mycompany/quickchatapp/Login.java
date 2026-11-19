@@ -22,7 +22,7 @@ public class Login {
     boolean checkUserName(String userName) {
         return userName.contains("_") && userName.length() <= 5;
     }
-
+//imigomo yokukhanda i password
     boolean checkPasswordComplexity(String password) {
         boolean hasLength = password.length() >= 8;
         boolean hasCapital = false;
@@ -36,11 +36,11 @@ public class Login {
         }
         return hasLength && hasCapital && hasNumber && hasSpecial;
     }
-
+//imigomo ye cellular
     boolean checkCellPhoneNumber(String cellNumber) {
         return cellNumber.startsWith("+27") && cellNumber.length() == 12;
     }
-
+//imigomo yokubhalisa
     String registerUser(String username, String password, String cellNumber) {
         if (!checkUserName(username)) {
             return "Username is not correctly formatted, please ensure that your username contains an underscore and is no more than five characters in length";
@@ -60,7 +60,7 @@ public class Login {
     boolean loginUser(String enteredUsername, String enteredPassword) {
         return enteredUsername.equals(this.savedUsername) && enteredPassword.equals(this.savedPassword);
     }
-
+//ungenile noma akangenanga??
     String returnLoginStatus(String enteredUsername, String enteredPassword) {
         if (loginUser(enteredUsername, enteredPassword)) {
             return "Welcome " + firstName + ", " + lastName + ", it is great to see you again.";
