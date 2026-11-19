@@ -34,7 +34,7 @@ public class Message {
         this.messageHash = createMessageHash();
     }
 
-    // For tests - set ID manually
+    // For ama tests lanake - set ID manually
     public Message(String messageID, String recipient, String messageText, String messageHash, int count) {
         this.messageID = messageID;
         this.recipient = recipient;
@@ -269,3 +269,4 @@ public static void loadStoredMessages() {
         return report;
     }
 }
+//hay nizongiluza fr, kutheni zininzi ezi error tjoo!
